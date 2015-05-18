@@ -53,4 +53,12 @@ caminar pasos (Hoja rect) = if null pasos then
                             Nothing
 
 sustituir :: Diagrama -> [Paso] -> Diagrama -> Diagrama
-sustituir = undefined
+sustituir diag [] diag2 = diag
+
+sustituir diag (paso:pasos) (diaa :-: diab) = case paso of
+                                                Primero -> ((sustituir diag pasos diaa) :-: diab)
+                                                Segundo -> (diaa :-: (sustituir diag pasos diab))
+
+sustituir diag (paso:pasos) (diaa :|: diab) = case paso of
+                                                Primero -> ((sustituir diag pasos diaa) :|: diab)
+                                                Segundo -> (diaa :|: (sustituir diag pasos diab))
