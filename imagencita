@@ -1,0 +1,31 @@
+Imagen { anchura = 4,
+		 altura  = 2,
+		 datos 	 = [
+
+		 [ Color { rojo = 14,  verde = 35, azul = 250 },
+		   Color { rojo = 75,  verde = 25, azul = 0 },
+		   Color { rojo = 120, verde = 0,  azul = 250 },
+		   Color { rojo = 0,   verde = 3,  azul = 100 }     ]
+
+		 ,
+
+		 [ Color { rojo = 142, verde = 3,   azul = 220 },
+		   Color { rojo = 175, verde = 215, azul = 230 },
+		   Color { rojo = 0,   verde = 120, azul = 20 },
+		   Color { rojo = 10,  verde = 30,  azul = 50 }    ]
+
+		 ] }
+
+Color promedio: Color { rojo = 67 , verde = 140 , azul = 53 }
+
+Imagen { anchura = 1, altura  = 1, datos = [[ Color { rojo = 14,  verde = 35, azul = 250 }]]}
+
+Imagen { anchura = 1, altura  = 2, datos = [[ Color { rojo = 25,  verde = 25, azul = 25 }], [ Color { rojo = 25,  verde = 25, azul = 25 }]]}
+
+[[	Color {rojo = 142, verde = 3, azul = 220},
+	Color {rojo = 175, verde = 215, azul = 230},
+	Color {rojo = 0, verde = 120, azul = 20},
+	Color {rojo = 10, verde = 30, azul = 50} ]]
+
+
+Imagen { anchura = 4 , altura = 1 , datos = [[Color { rojo = 14, verde = 35, azul = 250},Color { rojo = 75, verde = 25, azul = 0}, Color { rojo = 120, verde = 0, azul = 250},Color { rojo = 0, verde = 3, azul = 100}]] }
