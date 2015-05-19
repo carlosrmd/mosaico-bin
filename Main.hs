@@ -8,7 +8,10 @@ import Diagramas (Orientación(Horizontal, Vertical), caminar, dividir, rectáng
 import System.Environment
 
 ciclo :: Ventana -> Diagrama -> [Paso] -> IO ()
-ciclo v d pasos = undefined
+ciclo v d pasos = do
+					putStrLn "Culo";
+					mostrar v [] d;
+					ciclo v d pasos
 
 
 main :: IO ()
@@ -21,7 +24,6 @@ main =
 				case foo of
 					Right imagen -> do
 						v <- crearVentana (anchura imagen) (altura imagen);
-						mostrar v [] (Hoja(rectánguloImagen imagen))
 						ciclo v (Hoja(rectánguloImagen imagen)) []
 					Left razon -> putStrLn razon
 			_ -> putStrLn "Error en la entrada: Número de argumentos inválido."
