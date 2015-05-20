@@ -9,25 +9,82 @@ import System.Environment
 
 ciclo :: Ventana -> Diagrama -> [Paso] -> IO ()
 ciclo v d pasos = do
+					mostrar v (reverse pasos) d
 					teclaleida <- leerTecla v;
 					case teclaleida of
 						Just tecla ->
 							case tecla of
 								"Up" 		-> do
 									putStrLn "Up!";
-									ciclo v d pasos
+									case (caminar pasos d) of
+										Nothing ->
+											putStrLn ""
+										Just nuevoDiagram -> do
+											case nuevoDiagram of
+												Hoja r -> do
+													case (dividir Horizontal r) of
+														Just dia -> do
+															ciclo v (sustituir dia pasos d) (pasos ++ [Primero])
+														Nothing -> do
+															ciclo v d pasos
+												_ :-: _ -> do
+													ciclo v d (pasos ++ [Primero])
+												_		-> do
+													ciclo v d pasos
 								"Down" 		-> do
 									putStrLn "Down!";
-									ciclo v d pasos
-								"Right" 	-> do
-									putStrLn "Right!";
-									ciclo v d pasos
-								"Left" 		-> do
+									case (caminar pasos d) of
+										Nothing ->
+											putStrLn ""
+										Just nuevoDiagram -> do
+											case nuevoDiagram of
+												Hoja r -> do
+													case (dividir Horizontal r) of
+														Just dia -> do
+															ciclo v (sustituir dia pasos d) (pasos ++ [Segundo])
+														Nothing -> do
+															ciclo v d pasos
+												_ :-: _ -> do
+													ciclo v d (pasos ++ [Segundo])
+												_		-> do
+													ciclo v d pasos
+								"Left" 	-> do
 									putStrLn "Left!";
-									ciclo v d pasos
+									case (caminar pasos d) of
+										Nothing ->
+											putStrLn ""
+										Just nuevoDiagram -> do
+											case nuevoDiagram of
+												Hoja r -> do
+													case (dividir Vertical r) of
+														Just dia -> do
+															ciclo v (sustituir dia pasos d) (pasos ++ [Primero])
+														Nothing -> do
+															ciclo v d pasos
+												_ :|: _ -> do
+													ciclo v d (pasos ++ [Primero])
+												_		-> do
+													ciclo v d pasos
+								"Right" 		-> do
+									putStrLn "Right!";
+									case (caminar pasos d) of
+										Nothing ->
+											putStrLn ""
+										Just nuevoDiagram -> do
+											case nuevoDiagram of
+												Hoja r -> do
+													case (dividir Vertical r) of
+														Just dia -> do
+															ciclo v (sustituir dia pasos d) (pasos ++ [Segundo])
+														Nothing -> do
+															ciclo v d pasos
+												_ :|: _ -> do
+													ciclo v d (pasos ++ [Segundo])
+												_		-> do
+													ciclo v d pasos
 								"BackSpace" -> do
 									putStrLn "BackSpace!";
-									ciclo v d pasos
+									ciclo v d (take ((length pasos) - 1) pasos)
 								"q"			-> do
 									putStrLn "Bye";
 								_ 			-> do
@@ -35,7 +92,7 @@ ciclo v d pasos = do
 									ciclo v d pasos
 									
 						Nothing ->
-							putStrLn "Culo"
+							putStrLn ""
 
 
 main :: IO ()
@@ -48,7 +105,6 @@ main =
 				case foo of
 					Right imagen -> do
 						v <- crearVentana (anchura imagen) (altura imagen);
-						mostrar v [] (Hoja(rectánguloImagen imagen)) 
 						ciclo v (Hoja(rectánguloImagen imagen)) []
 					Left razon -> putStrLn razon
 			_ -> putStrLn "Error en la entrada: Número de argumentos inválido."
